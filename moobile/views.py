@@ -1,0 +1,47 @@
+from django.shortcuts import render,get_object_or_404
+from django.core.paginator import Paginator
+
+from moobile.models import Product, Category
+
+def index(request):
+    products = Product.objects.all()    
+    search = request.GET.get('search')
+    cats = Category.objects.all()
+    if search:
+        products = products.filter(title__icontains=search)
+
+    paginator = Paginator(products,8) 
+    page_number = request.GET.get('page', 1) 
+    page = paginator.page(1) 
+
+    page = paginator.page(page_number)
+
+    context = {
+        
+        'products':page,
+        'cats':cats,
+    }
+    return render(request, 'index.html', context)
+
+
+
+
+def my_view(request):
+    cats = Category.objects.all()  
+    context = {
+        'categories': cats,  
+    }
+    return render(request, 'index.html', context)
+
+
+
+
+def datails_category(request, cat_id):
+    category1 = Category.objects.get(pk=cat_id)
+    product = Product.objects.filter(category=category1)
+    return render(request, 'datails_category.html', {'category1': category1, 'product': product})
+
+
+def consistproduct(request, id):
+    product = get_object_or_404(Product, id=id)
+    return render(request, 'consistproduct.html', {'product': product})

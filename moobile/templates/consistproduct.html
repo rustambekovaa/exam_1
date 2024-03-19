@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+{% block title %}Подробнее{% endblock title %}
+
+{% block content %}
+<div class="container mx-auto">
+    <div class='flex flex-col lg:flex-row gap-5 lg:justify-between'>
+
+        <div class="p-4 w-full ">
+            <div class="flex flex-wrap justify-center items-center gap-4">
+                <img src="{{ product.images.first.image.url }}" alt="{{ product.title }}" class="product-image cursor-pointer" style="max-width: 100%; height:auto;" onclick="openModal('{{ product.images.first.image.url }}')" id="current-image">
+                            
+                {% for item in product.images.all %}
+                    <img src="{{ item.image.url }}" alt="{{ product.title }}" class="product-image cursor-pointer w-24 h-auto" onclick="openModal('{{ item.image.url }}')" style="display:none;">
+                {% endfor %}
+            </div>
+            <button class="next-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="nextImage()">Next</button>
+
+
+
+
+            <div class="overflow-x-auto pt-35">
+                <table class="table w-full">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="border-b mr-40 border-gray-400 py-2 text-lg font-semibold text-gray-800">Детали</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for attribute in product.attributes.all %}
+                        <tr>
+                            <td class="px-4 py-2">{{ attribute.key }}:</td>
+                            <td class="px-4 py-2">
+                                {% if attribute.link is not None %}
+                                <a href="{{ attribute.link }}" class="text-blue-500 hover:underline">{{ attribute.value }}</a>
+                                {% else %}
+                                {{ attribute.value }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="p-4  mt-40 mb-6  lg:w-3/4">
+            <h2 class="text-xl font-bold">{{ product.title }}</h2>
+            <p class="text-gray-600 pt-4">Категория: {{ product.category }}</p>
+            <p class="text-gray-600 pt-4">Тэги: 
+                {% for tag in product.tags.all %}
+                    #<span class="py-1 text-sm font-semibold text-gray-700 mr-2">{{ tag.name }}</span>
+                {% endfor %}
+            </p>
+            <h3 class="text-lg font-bold mt-4">Цена: {{ product.price }}</h3>
+            <p class="mt-4">{{ product.content }}</p>
+        </div>
+       
+    </div>
+</div>
+
+<div class="fixed inset-0 overflow-y-auto hidden" id="imageModal">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img id="modalImage" src="" class="img-fluid mx-auto">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onclick="closeModal()">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openModal(imageUrl) {
+        const modalImage = document.getElementById('modalImage');
+        modalImage.src = imageUrl;
+        modalImage.classList.remove('hidden');
+        modalImage.classList.add('flex');
+
+        const modal = document.getElementById('imageModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('fixed', 'inset-0', 'flex', 'items-center', 'justify-center');
+
+        document.body.classList.add('overflow-hidden'); 
+    }
+
+   
+    function closeModal() {
+        const modalImage = document.getElementById('modalImage');
+        modalImage.src = '';
+        modalImage.classList.remove('flex');
+        modalImage.classList.add('hidden');
+
+        const modal = document.getElementById('imageModal');
+        modal.classList.remove('fixed', 'inset-0', 'flex', 'items-center', 'justify-center');
+        modal.classList.add('hidden');
+
+        document.body.classList.remove('overflow-hidden'); 
+    }
+
+    
+    document.addEventListener('click', function(event) {
+        const modal = document.getElementById('imageModal');
+        const modalContent = document.getElementById('modalContent');
+        if (!modalContent.contains(event.target)) { 
+            closeModal();
+        }
+    });
+</script>
+
+
+{% endblock content %}
+
+
+
+
+{% block scripts %}
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let modal = new bootstrap.Modal(document.getElementById('imageModal'), {
+            keyboard: true
+        });
+
+        const images = document.querySelectorAll('.product-image');
+        images.forEach(image => {
+            image.addEventListener('click', function () {
+                const modalImage = document.getElementById('modalImage');
+                modalImage.src = this.src;
+                modal.show();
+            });
+        });
+
+        let modalImage = document.getElementById('modalImage');
+        modalImage.addEventListener('click', function (e) {
+            const currentImageIndex = Array.from(images).findIndex(image => image.src === this.src);
+            if (e.clientX < window.innerWidth / 2) {
+                const previousImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                modalImage.src = images[previousImageIndex].src;
+            } else {
+                const nextImageIndex = (currentImageIndex + 1) % images.length;
+                modalImage.src = images[nextImageIndex].src;
+            }
+        });
+    });
+
+
+
+  let currentImageIndex = 0;
+    const images = document.querySelectorAll('.product-image');
+
+    function nextImage() {
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        updateModal();
+    }
+
+    function updateModal() {
+        const currentImage = document.getElementById('current-image');
+        currentImage.src = images[currentImageIndex].src;
+    }
+
+</script>
+
+
+<style>
+
+    #imageModal {
+        background-color: rgba(0, 0, 0, 0.5); /* Прозрачность в 50% */
+    }
+</style>
+
+{% endblock scripts %}
