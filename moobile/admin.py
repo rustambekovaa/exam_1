@@ -19,13 +19,25 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id','title','is_published','category','date')
+    list_display = ('id','title','is_published','category','date','get_image')
     list_display_links = ('id','title',)
     search_fields = ('title','content','category')
     list_filter = ('is_published','date')
     filter_horizontal = ('tags',)
     raw_id_fields = ('category',)
+    readonly_fields = ('date','get_full_image')
     inlines = (ProductAttributeStackedInline,)
+
+
+    @admin.display(description='Изображение')
+    def get_image(self, product: Product):
+        return mark_safe(f'<img src="{product.images.first().image.url}" width="100px">')
+
+    @admin.display(description='Изображение')
+    def get_full_image(self, product: Product):
+        return mark_safe(f'<img src="{product.images.url}" width="50%">')
+
+
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):

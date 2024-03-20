@@ -6,7 +6,7 @@ from moobile.models import Product, Category
 def index(request):
     products = Product.objects.all()    
     search = request.GET.get('search')
-    cats = Category.objects.all()
+
     if search:
         products = products.filter(title__icontains=search)
 
@@ -16,6 +16,7 @@ def index(request):
 
     page = paginator.page(page_number)
 
+    cats = Category.objects.all()
     context = {
         
         'products':page,
@@ -26,12 +27,12 @@ def index(request):
 
 
 
-def my_view(request):
-    cats = Category.objects.all()  
-    context = {
-        'categories': cats,  
-    }
-    return render(request, 'index.html', context)
+# def my_view(request):
+#     cats = Category.objects.all()  
+#     context = {
+#         'categories': cats,  
+#     }
+#     return render(request, 'index.html', context)
 
 
 

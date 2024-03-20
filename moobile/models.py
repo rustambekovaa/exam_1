@@ -18,7 +18,7 @@ class Tag(models.Model):
 
 class Product(models.Model):
     title = models.CharField(max_length=100, verbose_name='Название')
-    price = models.IntegerField(max_length=100,verbose_name='Цена')
+    price = models.IntegerField(verbose_name='Цена')
     is_published = models.BooleanField(default=True)
     content = models.TextField(verbose_name='контент')
     date = models.DateTimeField(verbose_name='дата добавление', auto_now_add=True)

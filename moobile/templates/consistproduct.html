@@ -14,9 +14,9 @@
                     <img src="{{ item.image.url }}" alt="{{ product.title }}" class="product-image cursor-pointer w-24 h-auto" onclick="openModal('{{ item.image.url }}')" style="display:none;">
                 {% endfor %}
             </div>
+            <button class="next-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="prevImage()">Prev</button>
             <button class="next-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="nextImage()">Next</button>
-
-
+            
 
 
             <div class="overflow-x-auto pt-35">
@@ -122,33 +122,64 @@
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        let modal = new bootstrap.Modal(document.getElementById('imageModal'), {
-            keyboard: true
-        });
-
-        const images = document.querySelectorAll('.product-image');
-        images.forEach(image => {
-            image.addEventListener('click', function () {
-                const modalImage = document.getElementById('modalImage');
-                modalImage.src = this.src;
-                modal.show();
+    
+    {% comment %}
+        document.addEventListener("DOMContentLoaded", function () {
+            let modal = new bootstrap.Modal(document.getElementById('imageModal'), {
+                keyboard: true
+            });
+    
+            const images = document.querySelectorAll('.product-image');
+            images.forEach(image => {
+                image.addEventListener('click', function () {
+                    const modalImage = document.getElementById('modalImage');
+                    modalImage.src = this.src;
+                    modal.show();
+                });
+            });
+    
+            let modalImage = document.getElementById('modalImage');
+            modalImage.addEventListener('click', function (e) {
+                const currentImageIndex = Array.from(images).findIndex(image => image.src === this.src);
+                if (e.clientX < window.innerWidth / 2) {
+                    const previousImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                    modalImage.src = images[previousImageIndex].src;
+                } else {
+                    const nextImageIndex = (currentImageIndex + 1) % images.length;
+                    modalImage.src = images[nextImageIndex].src;
+                }
             });
         });
+    {% endcomment %}
 
-        let modalImage = document.getElementById('modalImage');
-        modalImage.addEventListener('click', function (e) {
-            const currentImageIndex = Array.from(images).findIndex(image => image.src === this.src);
-            if (e.clientX < window.innerWidth / 2) {
-                const previousImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-                modalImage.src = images[previousImageIndex].src;
-            } else {
-                const nextImageIndex = (currentImageIndex + 1) % images.length;
-                modalImage.src = images[nextImageIndex].src;
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const closeModalButton = document.getElementById('closeModal');
+    
+        window.openModal = function(imageUrl) {
+            modalImage.src = imageUrl;
+            modal.classList.remove('hidden');
+        };
+    
+        closeModalButton.addEventListener('click', function () {
+            modal.classList.add('hidden');
+        });
+    
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                modal.classList.add('hidden');
+            }
+        });
+    
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
             }
         });
     });
-
+    
 
 
   let currentImageIndex = 0;
@@ -158,6 +189,12 @@
         currentImageIndex = (currentImageIndex + 1) % images.length;
         updateModal();
     }
+    function prevImage() {
+        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+
+        updateModal();
+    }
+    
 
     function updateModal() {
         const currentImage = document.getElementById('current-image');
