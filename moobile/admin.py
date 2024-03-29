@@ -1,12 +1,18 @@
 from django.contrib import admin
 
-from .models import Category,Product,Tag,ProductAttribute,ProductImage
+from .models import Category, Product, Tag, ProductAttribute, ProductImage
 from django.utils.safestring import mark_safe
 
 
 class ProductAttributeStackedInline(admin.StackedInline):
     model = ProductAttribute
     extra = 1
+
+
+class ProductImageStackedInline(admin.StackedInline):
+    model = ProductImage
+    extra = 1
+
 
 
 
@@ -26,7 +32,7 @@ class ProductAdmin(admin.ModelAdmin):
     filter_horizontal = ('tags',)
     raw_id_fields = ('category',)
     readonly_fields = ('date','get_full_image')
-    inlines = (ProductAttributeStackedInline,)
+    inlines = (ProductAttributeStackedInline, ProductImageStackedInline)
 
 
     @admin.display(description='Изображение')
@@ -47,10 +53,10 @@ class TagAdmin(admin.ModelAdmin):
 
 
 
-@admin.register(ProductImage)
-class ProductImageAdmin(admin.ModelAdmin):
-    list_display = ('id',)
-    list_display_links = ('id',)
+# @admin.register(ProductImage)
+# class ProductImageAdmin(admin.ModelAdmin):
+#     list_display = ('id',)
+#     list_display_links = ('id',)
 
 
 
