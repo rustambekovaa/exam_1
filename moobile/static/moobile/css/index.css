@@ -22,14 +22,14 @@ body {
 .container {
     width: 85%;
     margin: 0 auto;
-    max-width: 1280px;
+    /* max-width: 1280px; */
 }
 
 .nav_flex {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    /* padding: 5px; */
 }
 
 nav {

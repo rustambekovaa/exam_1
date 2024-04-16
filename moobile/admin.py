@@ -31,17 +31,19 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('is_published','date')
     filter_horizontal = ('tags',)
     raw_id_fields = ('category',)
-    readonly_fields = ('date','get_full_image')
+    # readonly_fields = ('date','get_full_image')
     inlines = (ProductAttributeStackedInline, ProductImageStackedInline)
 
 
     @admin.display(description='Изображение')
     def get_image(self, product: Product):
-        return mark_safe(f'<img src="{product.images.first().image.url}" width="100px">')
+        if product.images.first() :
+            if product.images.first().image: 
+                return mark_safe(f'<img src="{product.images.first().image.url}" width="100px">')
 
-    @admin.display(description='Изображение')
-    def get_full_image(self, product: Product):
-        return mark_safe(f'<img src="{product.images.url}" width="50%">')
+    # @admin.display(description='Изображение')
+    # def get_full_image(self, product: Product):
+    #     return mark_safe(f'<img src="{product.images.url}" width="50%">')
 
 
 

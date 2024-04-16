@@ -1,5 +1,6 @@
-from django.shortcuts import render,get_object_or_404
 from django.core.paginator import Paginator
+from django.shortcuts import render,get_object_or_404
+
 
 from moobile.models import Product, Category
 
@@ -25,16 +26,13 @@ def index(request):
     return render(request, 'index.html', context)
 
 
+def addproduct(request): 
+    return render(request,'addproduct.html', {'title':'Добавление статьи '})
 
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 
-# def my_view(request):
-#     cats = Category.objects.all()  
-#     context = {
-#         'categories': cats,  
-#     }
-#     return render(request, 'index.html', context)
-
-
+from .forms import NameForm
 
 
 def datails_category(request, cat_id):

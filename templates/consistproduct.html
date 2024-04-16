@@ -1,0 +1,205 @@
+    {% extends 'base.html' %}
+
+    {% block title %}Подробнее{% endblock title %}
+
+    {% block content %}
+    <div class="container mx-auto">
+        <div class='flex flex-col lg:flex-row gap-5 lg:justify-between'>
+            <div class="p-4 w-full">
+                <div class="flex flex-wrap justify-center items-center gap-4 relative" >
+                    <img id="main-image" data-modal_id="modal_1" src="{{ product.images.first.image.url }}" alt="{{ product.title }}" class="main-image  toggle_modal w-64" >
+                    <div class="modal_container" id="modal_1">
+                        <div class="modal_backdrop toggle_modal" data-modal_id="modal_1"></div>
+                        <div class="modal_card">
+                            <div class="text-end">
+                                <button class="toggle_modal" data-modal_id="modal_1"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                            <img id="modalImage"  data-modal_id="modal_1" src="{{ product.images.first.image.url }}" alt="{{ product.title }}" class="main-image toggle_modal" >
+                            <button class="absolute top-1/2 transform -translate-y-1/2 left-0 bg-gray-200 p-2 rounded-full hover:bg-gray-300" onclick="prevImage()">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                            </button>
+                            
+                            <button class="absolute top-1/2 transform -translate-y-1/2 right-0 bg-gray-200 p-2 rounded-full hover:bg-gray-300" onclick="nextImage()">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                        
+
+                    <button class="absolute top-1/2 transform -translate-y-1/2 left-0 bg-gray-200 p-2 rounded-full hover:bg-gray-300" onclick="prevImage()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                    </button>
+                    
+                    <button class="absolute top-1/2 transform -translate-y-1/2 right-0 bg-gray-200 p-2 rounded-full hover:bg-gray-300" onclick="nextImage()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                    <div class="p-4 w-full flex justify-center items-center">
+                            <div class="flex gap-3 mt-3">
+                                {% for item in product.images.all %}
+                                <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+                                <swiper-container>
+                                  <swiper-slide><img data-modal_id="modal_1" onclick="changeMainImage('{{ item.image.url }}')" src="{{ item.image.url }}" class="toggle_moda w-24 h-auto transform hover:scale-105 transition duration-1000" alt="{{ product.title }}"></swiper-slide>
+                                </swiper-container>
+                                {% endfor %}
+                            </div>
+                    </div>
+                </div>            
+                <div class="overflow-x-auto pt-35">
+                    <table class="table w-full">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="border-b mr-40 border-gray-400 py-2 text-lg font-semibold text-gray-800">Детали</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for attribute in product.attributes.all %}
+                            <tr>
+                                <td class="px-4 py-2">{{ attribute.key }}:</td>
+                                <td class="px-4 py-2">
+                                    {% if attribute.link is not None %}
+                                    <a href="{{ attribute.link }}" class="text-blue-500 hover:underline">{{ attribute.value }}</a>
+                                    {% else %}
+                                    {{ attribute.value }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="p-4  mt-40 mb-6  lg:w-3/4">
+                <h2 class="text-xl font-bold">{{ product.title }}</h2>
+                <p class="text-gray-600 pt-4">Категория: {{ product.category }}</p>
+                <p class="text-gray-600 pt-4">Тэги: 
+                    {% for tag in product.tags.all %}
+                        <span class="py-1 text-sm font-semibold text-gray-700 mr-2">{{ tag.name }}</span>
+                    {% endfor %}
+                </p>
+                <h3 class="text-lg font-bold mt-4">Цена: {{ product.price }}</h3>
+                <p class="mt-4">{{ product.content }}</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        const toggleModals = document.querySelectorAll('.toggle_modal')
+
+        const toggleModalWin = (toggleModal) => {
+            const modalWinId = toggleModal.dataset.modal_id // modal_1
+            const modalWin = document.querySelector(`#${modalWinId}`)
+            modalWin.classList.toggle('active')
+        }
+
+        for (const toggleModal of toggleModals) {
+            toggleModal.addEventListener('click', e => toggleModalWin(toggleModal))
+        }
+
+        function changeMainImage(imageUrl) {
+            const mainImage = document.getElementById('main-image');
+            mainImage.src = imageUrl;
+        }
+
+        let currentImageIndex = 0; 
+
+        function nextImage() {
+            const images = document.querySelectorAll('.toggle_moda'); 
+            currentImageIndex = (currentImageIndex + 1) % images.length; 
+            const imageUrl = images[currentImageIndex].getAttribute('src'); 
+            changeMainImage(imageUrl); 
+        }
+
+    
+        function prevImage() {
+            const images = document.querySelectorAll('.toggle_moda'); 
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length; 
+            const imageUrl = images[currentImageIndex].getAttribute('src'); 
+            changeMainImage(imageUrl); 
+        }
+        function changeMainImage(imageUrl) {
+            const mainImage = document.getElementById('main-image');
+            if (mainImage) {
+                mainImage.src = imageUrl;
+        
+                const modalImage = document.getElementById('modalImage');
+                if (modalImage) {
+                    modalImage.src = imageUrl;
+                }
+            }
+        }
+        
+
+    </script>
+
+    <div class="fixed inset-0 overflow-y-auto hidden" id="imageModal">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <img id="modalImage" src="" class="img-fluid mx-auto">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onclick="closeModal()">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% endblock content %}
+
+
+    {% block scripts %}
+
+
+    <script>
+            let modal = document.getElementById('imageModal');
+            let modalImage = document.getElementById('modalImage');
+            let closeModalButton = document.getElementById('closeModal');
+        
+            window.openModal = function(imageUrl) {
+                modalImage.src = imageUrl;
+                modal.classList.remove('hidden');
+            };
+        
+            closeModalButton.addEventListener('click', function () {
+                modal.classList.add('hidden');
+            });
+        
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    modal.classList.add('hidden');
+                }
+            });
+        
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+   
+
+    for (const toggleModal of toggleModals) {
+        toggleModal.addEventListener('click', e => toggleModalWin(toggleModal));
+    }
+
+
+</script>
+       
+
+{% endblock scripts %}
+
+
+
+    
+    
