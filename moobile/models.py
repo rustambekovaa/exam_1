@@ -39,12 +39,6 @@ class ProductImage(models.Model):
     def __str__(self):
         return f'Изображение для продукта: {self.product.title}'
     
-    
-class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'price', 'category')
-    list_filter = ('category', 'tags')
-    search_fields = ('title', 'content')
-
 
 class ProductAttribute(models.Model):
     class Meta:
@@ -52,7 +46,7 @@ class ProductAttribute(models.Model):
         verbose_name_plural = 'атрибуты:'
 
 
-    product = models.ForeignKey('Product', on_delete=models.PROTECT, related_name='attributes')
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='attributes')
     key = models.CharField(verbose_name='ключ', max_length=100)
     value = models.CharField(verbose_name='значение', max_length=100)
     

@@ -6,9 +6,9 @@
 
 
 <div class="max-w-lg mx-auto bg-white p-8 rounded-md shadow-md border-4 border-4 border-black">
-<h2 class="mb-5 text-xl text-gray-800 font-bold font-mono flex place-content-center ">Create news</h2>
-  
-    <form action="{% url 'create_products' %}" method="post" enctype="multipart/form-data">
+<h2 class="mb-5 text-xl text-gray-800 font-bold font-mono flex place-content-center ">Create product</h2>
+  <div class="first-example">
+    <!-- <form action="{% url 'create_products' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-4">
             <input name="title" placeholder="Заголовок" type="text" class="border border-current rounded-none p-2 form-input border-gray-300 block w-full rounded-md focus:ring-indigo-500 focus:border-indigo-500 "  required>
@@ -18,7 +18,8 @@
         </div>
 
         <div class="mb-4">
-            <input name="image" placeholder="Изображение" type="file" class="form-input border-gray-300 block w-full rounded-md focus:ring-indigo-500 focus:border-indigo-500" required>
+            <input name="image" placeholder="Изображение" 
+             type="file" class="form-input border-gray-300 block w-full rounded-md focus:ring-indigo-500 focus:border-indigo-500" required>
         </div>
 
         <div class="mb-5">
@@ -47,7 +48,68 @@
         <div class="mb-5">
             <button type="submit" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded w-full">Create</button>
         </div>
+    </form> -->
+
+  </div>
+
+    <form action="{% url 'create_products' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="">{{ form.title.label }}</label>
+                {{ form.title }}
+                {% for error in form.title.errors %}
+                    <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+                {% endfor %}
+        </div> 
+        <div class="mb-4">
+            <label for="">{{  form.price.label  }}</label>
+            {{ form.price }}
+            {% for error in form.price.errors %}
+                <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="mb-4">
+            <label for="">{{ form.image.label }}</label>
+                {{ form.image }}
+                {% for error in form.image.errors %}
+                    <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+                {% endfor %}
+        </div>
+        <div class="mb-5">
+            <label for="">{{ form.content.label }}</label>
+            {{ form.content }}
+            {% for error in form.content.errors %}
+                <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+            {% endfor %}
+         </div>
+        <div class="mb-4">
+            <label for="">{{ form.is_published }}</label>
+            {{form.is_published}}
+            {% for error in form.is_published.errors %}
+                    <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="mb-5">
+            <label for="">{{ form.category.label }}</label>
+            {{ form.category }}
+            {% for error in form.category.errors %}
+                <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="mb-5">
+            <label for="">{{ form.tags.label }}</label>
+            {{ form.tags }}
+            {% for error in form.tags.errors %}
+                <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-5">
+            <button type="submit" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded w-full">Create</button>
+        </div>
     </form>
+
+    
 </div>
 
 {% endblock content %}

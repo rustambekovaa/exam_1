@@ -1,11 +1,19 @@
 {% extends 'workspace/base.html' %}
 
-
-
 {% block content %}
 
-
 <div class="max-w-lg mx-auto bg-white p-8 rounded-md shadow-md border-4 border-4 border-black">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-5">
+            {{ form.as_p }}
+            <button type="submit" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded w-full">Save</button>
+        </div>
+    </form>
+</div> 
+
+<!-- 
+<div class="max-w-lg mx-auto bg-white p-8 rounded-md shadow-md border-4 border-4 border-black"> 
     <h2 class="mb-5 text-xl text-gray-800 font-bold font-mono flex place-content-center ">Update product</h2>
     <form action="{% url 'update_product' id=product.id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -50,7 +58,6 @@
             <button type="submit" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded w-full">Save</button>
         </div>
     </form>
-</div>
+</div> -->
 
 {% endblock content %}
-  
