@@ -1,0 +1,36 @@
+{% extends 'workspace/base.html' %}
+{% load static %}
+
+{% block title %}| Login{% endblock title %}
+
+{% block content %}
+<div class=" mt-5 grid place-items-center max-w-lg mx-auto">
+    <div class="bg-white p-8 rounded shadow-md w-96">
+        <form action="{% url 'login' %}" id="login_form" method="POST" novalidate>
+            {% csrf_token %}
+            <div class="mb-4 ">
+                {{ form.username }}
+                <div class="text-red-500">
+                    {{ form.username.errors }}
+                </div>
+            </div>
+            <div class="mb-4">
+                {{ form.password }}
+                <div class="text-red-500">
+                    {{ form.password.errors }}
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded w-full">Войти</button>
+            </div>
+
+            {% if message %}
+            
+            <div class="mt-4 text-red-500 text-center">
+                <i class="fa-solid fa-circle-exclamation"></i> {{ message }}
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock content %}

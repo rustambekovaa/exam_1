@@ -3,27 +3,31 @@ from django.shortcuts import render,get_object_or_404
 
 
 from moobile.models import Product, Category
+from moobile.filters import ProductFilter
 
 def index(request):
-    products = Product.objects.all()    
+    products = Product.objects.all()  
+    # if request.user.is_authenticated:
+    #     products = Product.objects.filter(author=request.user)   
     search = request.GET.get('search')
 
     if search:
         products = products.filter(title__icontains=search)
 
-    paginator = Paginator(products,8) 
-    page_number = request.GET.get('page', 1) 
-    page = paginator.page(1) 
+    filter_set = ProductFilter(request.GET, queryset=products)
 
-    page = paginator.page(page_number)
+    paginator = Paginator(filter_set.qs,8) 
+    page = request.GET.get('page', 1) 
+
+    products = paginator.get_page(page)
 
     cats = Category.objects.all()
     context = {
         
-        'products':page,
+        'products':products,
         'cats':cats,
     }
-    return render(request, 'index.html', context)
+    return render(request, 'index.html',{'context':context,'products': products,'filter': filter_set})
 
 
 def addproduct(request): 

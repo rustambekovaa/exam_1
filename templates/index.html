@@ -4,26 +4,27 @@
 
 <div class="container mx-auto px-6  bg-white">
     <div class="flex flex-col lg:flex-row gap-5 lg:justify-between ">
-        <div class="flex-grow lg:mr-6 mt-20 mb-6 lg:mb-0">
+        <div class="flex-grow lg:mr-6 mt-20 mb-6 lg:mb-0 bg-slate-100">
             <ul class="grid grid-cols-1 lg:grid-cols-none gap-6">
-            <h2 class="text-xl font-semibold text-gray-800">Женщинам</h2>
-            
-                {% for category in cats %}
+            <!-- <h2 class="text-xl font-semibold text-gray-800">Женщинам</h2> -->
+                {% include 'components/sidebar.html' %}
+
+                <!-- {% for category in cats %}
                     <li class="hover:text-white hover:font-bold hover:bg-gray-800 active:bg-gray-800 focus:outline-none focus:ring-violet-300 border-gray-800 border-2 border-gray-300 rounded-full p-2">
                         <a class="text-decoration-none hover:text-white hover:font-bold block" href="{% url 'datails_category' cat_id=category.id %}">{{ category.name }}</a>
                     </li>
-                {% endfor %}
+                {% endfor %} -->
             </ul>
         </div>
         
-        <div class="w-full lg:w-3/4">
+        <div class="w-full lg:w-3/4 mt-5">
             <h2 class="text-xl font-semibold text-gray-800">Магазины</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
                     {% for post in products %}
-                    <div class="bg-white rounded-lg shadow-md p-6 relative overflow-hidden">
+                    <div class="rounded-lg shadow-md hover:shadow-lg dark:hover:shadow-slate/800 p-6 relative overflow-hidden transition-transform transform hover:scale-105">
                         <div class="relative group">
-                            <img src="{{ post.images.first.image.url }}" alt="" class="duration-300 ease-in-out group-hover:opacity-0">
-                            <img src="{{ post.images.last.image.url }}" alt="" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100">
+                            <img src="{{ post.image.url }}" alt="" class="duration-300 ease-in-out group-hover:opacity-0">
+                            <img src="{{ post.image.url }}" alt="" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100">
                         </div>
                         <h3 class="font-mono text-black text-center p-3">DIOR</h3>
                         <a href="{% url 'consistproduct' id=post.id %}" class="mt-4 text-blue-500 hover:no-underline"><h5 class="text-center text-gray-600">{{ post.title }}</h5></a>

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'moobile.apps.MoobileConfig',
     'workspace',
+    'django_filters'
 ]
 
 MIDDLEWARE = [

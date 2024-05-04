@@ -1,31 +1,112 @@
 
   <nav>
-    <div class="container mx-auto px-6">
-        <div class="nav_flex">
+    <div class="container mx-auto px-6 bg-slate-800">
+        <div class="nav_flex p-2">
             <div id="menu_container"></div>
             <div class="logo" href="/">
-              <a class="text-xl text-gray-800 font-bold  items-center font-mono" href="/">DIOR</a>
+              <a class="text-xl text-white font-bold items-center font-mono" href="/">DIOR</a>
             </div>
             <menu id="menu">
                 <div class="text-end">
-                    <button id="close_btn"><i class="fa-solid fa-xmark"></i></button>
+                    <button id="close_btn"><i class="fa-solid fa-xmark" style="color:#ffff"></i></button>
                 </div>
                 <div class="menu_flex">
                   <form class="flex  lg:mr-0" method="get" action="/">
-                    <input class="form-input bg-inherit rounded-sm text-black w-full lg:w-64 mr-3 px-3 py-2 focus:outline-none" name="search" type="search" value="{{ request.GET.search }}" placeholder="Search" aria-label="Search">
-                    <button class="btn-primary rounded-lg bg-violet-50 px-4 py-2" type="submit">Search</button>
+                    <input class="form-input border border-t-2  bg-inherit rounded-lg text-white w-full lg:w-64 mr-3 px-3 py-2 focus:outline-none" name="search" type="search" value="{{ request.GET.search }}" placeholder="Поиск" aria-label="Search">
+                    <button class="btn-primary rounded-lg px-4 py-1 bg-slate-800 text-white font-bold" type="submit">Поиск</button>
                   </form>                
-                    <div class="item"><a href="{% url 'workspace' %}">Workspace</a></div>
-                    <div class="item"><a href="#">Contact</a></div>
-                    <div class="item"><a href="#">Log in</a></div>
+                  {% if request.user.is_authenticated %}
+                      <button id="swip_menu">
+                        <div class=" relative group p-2 focus:outline-none">
+                          <a class="text-white font-bold" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ request.user.username }}
+                          </a>
+                          <div id="menu1" class="mt-17 opacity-0 group-hover:opacity-100 absolute right-0 bg-white w-52 border border-t-1 z-10">
+                            <section class="py-2 border-b">
+                              <ul>
+                                <li>
+                                  <a class="flex items-center px-4 py-2 text-sm hover:bg-gray-100" href="{% url 'workspace' %}">Рабочая среда</a>
+                                  
+                                </li>
+                                <li>
+                                  <a class="flex items-center px-4 py-2 text-sm hover:bg-gray-100"  href="{% url 'logout' %}">Выйти</a>
+                                </li><li>
+                                  <a class="flex items-center px-4 py-2 text-sm hover:bg-gray-100"  href="{% url 'change_profile' %}">Профил</a>
+                                </li>
+                              </ul>
+                            </section>
+                          </div> 
+                        </div>
+                       
+                      </button>                          
+                 
+                  {% else %} 
+                     <div class="login flex gap-5">
+                      <div class="grid gap-5">
+                        <a data-modal_id="modal_1" class=" text-white font-bold toggle_modal" aria-current="page" href="{%  url 'login' %}">Войти</a>
+                        <!-- <div class="modal_container" id="modal_1">
+                          <div class="modal_backdrop toggle_modal" data-modal_id="modal_1"></div>
+                          <div class="modal_card">
+                              <div class="text-end">
+                                  <button class="toggle_modal" data-modal_id="modal_1"><i class="fa-solid fa-xmark"></i></button>
+                              </div>
+                              <form action="{% url 'login' %}" id="login_form" method="POST" novalidate>
+                                {% csrf_token %}
+                                <div class="mb-4 ">
+                                    {{ form.username }}
+                                    <div class="text-red-500">
+                                        {{ form.username.errors }}
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    {{ form.password }}
+                                    <div class="text-red-500">
+                                        {{ form.password.errors }}
+                                    </div>
+                                </div>
+                                <div>
+                                    <button type="submit" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded w-full">Login</button>
+                                </div>
+                    
+                                {% if message %}
+                                
+                                <div class="mt-4 text-red-500 text-center">
+                                    <i class="fa-solid fa-circle-exclamation"></i> {{ message }}
+                                </div>
+                                {% endif %}
+                            </form>
+                          </div>
+                        </div> -->
+                      </div>
+                      <div class="text-white font-bold">
+                        <a aria-current="page" href="{% url 'register' %}">Регистрация</a>
+                      </div>
+                     </div>
+                      
+                  {% endif %}
+
                 </div>
             </menu>
-            <button id="open_btn"><i class="fa-solid fa-bars"></i></button>
+            <button id="open_btn"><i class="fa-solid fa-bars" style="color: #ffff;"></i></button>
           </div>
     </div>
 </nav>
 
 <script>
+    const toggleModals = document.querySelectorAll('.toggle_modal')
+    
+    const toggleModalWin = (toggleModal) => {
+        const modalWinId = toggleModal.dataset.modal_id // modal_1
+        const modalWin = document.querySelector(`#${modalWinId}`)
+        modalWin.classList.toggle('active')
+    }
+
+    for (const toggleModal of toggleModals) {
+        toggleModal.addEventListener('click', e => toggleModalWin(toggleModal))
+    }
+
+
     const menu = document.querySelector('#menu')
     const menu_container = document.querySelector('#menu_container')
     const close_btn = document.querySelector('#close_btn')

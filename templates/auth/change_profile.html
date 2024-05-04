@@ -1,0 +1,36 @@
+{% extends 'workspace/base.html' %}
+{% load static %}
+
+{% block title %}| Change{% endblock title %}
+
+{% block content %}
+
+    <style>
+
+        #change_profile_form ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            color: red;
+        }
+
+    </style>
+
+    <div class="mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh">
+        <div class="max-w-lg mx-auto" style="min-width: 600px">
+            <div class="bg-white p-8 rounded shadow-md  ">
+                <form action="{% url 'change_profile' %}" id="change_profile_form" method="POST" novalidate>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="text-start">
+                        <a href="{% url 'change_password' %}" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded w-full"> Изменить пароль</a>
+                    </div>
+                    <div>
+                        <button type="submit" class=" mt-5 bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded w-full">Сохранить</button>
+                    </div>
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

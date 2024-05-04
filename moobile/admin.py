@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Product, Tag, ProductAttribute, ProductImage
+from .models import Category, Product, Tag, ProductAttribute
 from django.utils.safestring import mark_safe
 
 
@@ -8,10 +8,6 @@ class ProductAttributeStackedInline(admin.StackedInline):
     model = ProductAttribute
     extra = 1
 
-
-class ProductImageStackedInline(admin.StackedInline):
-    model = ProductImage
-    extra = 1
 
 
 
@@ -32,14 +28,13 @@ class ProductAdmin(admin.ModelAdmin):
     filter_horizontal = ('tags',)
     raw_id_fields = ('category',)
     # readonly_fields = ('date','get_full_image')
-    inlines = (ProductAttributeStackedInline, ProductImageStackedInline)
+    inlines = (ProductAttributeStackedInline,)
 
 
     @admin.display(description='Изображение')
     def get_image(self, product: Product):
-        if product.images.first() :
-            if product.images.first().image: 
-                return mark_safe(f'<img src="{product.images.first().image.url}" width="100px">')
+        if product.image:
+            return mark_safe(f'<img src="{product.image.url}" width="100px">')
 
     # @admin.display(description='Изображение')
     # def get_full_image(self, product: Product):
