@@ -16,9 +16,9 @@
 
     </style>
 
-    <div class="mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh">
-        <div class="max-w-lg mx-auto" style="min-width: 600px">
-            <div class="bg-white p-8 rounded shadow-md  ">
+    <div class="p-5 mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh">
+        <div class="max-w-lg mx-auto">
+            <div class="bg-white p-8 rounded shadow-md border-2 ">
                 <form action="{% url 'change_profile' %}" id="change_profile_form" method="POST" novalidate>
                     {% csrf_token %}
                     {{ form.as_p }}

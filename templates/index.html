@@ -19,9 +19,9 @@
         
         <div class="w-full lg:w-3/4 mt-5">
             <h2 class="text-xl font-semibold text-gray-800">Магазины</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
+                <div class="flgrid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4">
                     {% for post in products %}
-                    <div class="rounded-lg shadow-md hover:shadow-lg dark:hover:shadow-slate/800 p-6 relative overflow-hidden transition-transform transform hover:scale-105">
+                    <div class="rounded-lg shadow-md hover:shadow-lg dark:hover:shadow-slate/800 hover:border-2 p-6 relative overflow-hidden transition-transform transform hover:scale-105">
                         <div class="relative group">
                             <img src="{{ post.image.url }}" alt="" class="duration-300 ease-in-out group-hover:opacity-0">
                             <img src="{{ post.image.url }}" alt="" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100">

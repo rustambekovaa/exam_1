@@ -67,7 +67,7 @@ class RegisterForm(BaseUserCreationForm):
         )
 
         widgets = {
-            'first_name': forms.TextInput(attrs={'class':'mb-4 border border-current rounded-none p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Введите имя'}),
+            'first_name': forms.TextInput(attrs={'class':' mb-4 border border-current rounded-none p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Введите имя'}),
             'last_name': forms.TextInput(attrs={'class':'mb-4 border border-current rounded-none p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Введите фамилию'}),
             'username': forms.TextInput(attrs={'class':'mb-4 border border-current rounded-none p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Придумайте имя пользователя'}),
             'email': forms.EmailInput(attrs={'class':'mb-4 border border-current rounded-none p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Введите эл. почту'}),

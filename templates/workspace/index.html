@@ -7,11 +7,11 @@
         <div class="w-full lg:w-3/4">
             <div class="create_product lg:flex justify-between content-center mb-5">
                 <h2 class="mb-5  text-xl text-gray-800 font-bold font-mono">Добро пожаловать в рабочую область</h2>
-                <div><a class=" bg-slate-800 text-white p-2 font-serif text-white  rounded-full " href="{%  url 'create_products' %}" >Создать продукт</a></div>
+                <div><a class=" bg-slate-800 text-white p-2 font-serif text-white font-mono rounded-full " href="{%  url 'create_products' %}" >Создать продукт</a></div>
             </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
+                <div class="flgrid grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4  gap-6 mt-4">
                     {% for post in products %}
-                    <div class="rounded-lg shadow-md hover:shadow-lg dark:hover:shadow-slate/800 p-6 relative overflow-hidden transition-transform transform hover:scale-105">
+                    <div class="rounded-lg shadow-md hover:shadow-lg dark:hover:shadow-slate/800 p-6 hover:border-2 relative overflow-hidden transition-transform transform hover:scale-105">
                         <div class="relative group">
                             <img src="{{ post.image.url }}" alt="" class="duration-300 ease-in-out group-hover:opacity-0">
                             <img src="{{ post.image.url }}" alt="" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100">

@@ -45,9 +45,9 @@ def create_products(request):
             product = form.save(commit=False)
             product.author = request.user
             product.save()
-            messages.success(request, f'Товар "{product.title}" успешно создан!')
+            messages.success(request, f'Товар "{product.title}" успешно создан!',extra_tags='success-message')
             return redirect('/workspace/')
-        messages.error(request, f'Исправьте ошибки ниже')
+        messages.error(request, f'Исправьте ошибки ниже', extra_tags='error-message')
     else:
         form = ProductForm()
     
@@ -108,7 +108,7 @@ def login_profile(request):
             password = form.cleaned_data.get('password')
 
             user = authenticate(username = username,password = password)
-
+ 
             if user:
                 login(request, user)
                 messages.success(request, f'Добро пожаловать в рабочее пространство "{user.first_name} {user.last_name}"')

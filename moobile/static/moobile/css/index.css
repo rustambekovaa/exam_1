@@ -17,13 +17,14 @@ body {
     font-family: var(--body-font);
     /* background-color: var(--background-color); */
     color: var(--text-color);
+    box-sizing: border-box;
 }
 
 .container {
-    width: 85%;
+    /* width: 85%; */
     margin: 0 auto;
     /* max-width: 1280px; */
-}
+} 
 
 .nav_flex {
     display: flex;
@@ -83,6 +84,7 @@ menu .item a:hover {
     transition: .3s;
 }
 
+
 #open_btn:hover {
     background-color: var(--accent-text-color);
     color: var(--primary-color);
@@ -129,6 +131,8 @@ menu .item a:hover {
 .user-profile:hover .logout-block {
     display: block;
 }
+
+
 
 @media screen and (max-width: 762px) {
     .login{
@@ -187,7 +191,7 @@ menu .item a:hover {
 
 
 #menu1{
-    margin-top:17px;
+    margin-top:17n   px;
 }
 .text-end {
     text-align: end;
@@ -231,4 +235,12 @@ menu .item a:hover {
 
 .modal_container.active .modal_card {
     transform: scale(1);
+}
+
+.success-message {
+    margin-top: 5px;
+}
+
+.error-message {
+    margin-top: 5px;
 }
