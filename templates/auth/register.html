@@ -5,28 +5,95 @@
 
 {% block content %}
 
-    <style>
 
-        #register_form ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            color: red;
-        }
 
-    </style>
-
-    <div class="p-5 mt-5 d-flex justify-content-center align-items-center" style="min-height: 80vh">
-        <div class="max-w-lg mx-auto">
-            <div class="bg-white p-8 rounded shadow-md border-2  ">
-                <form action="{% url 'register' %}" id="register_form" method="POST" novalidate>
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <div>
-                        <button type="submit" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded w-full">Register</button>
-                    </div>
-                </form>
+<div class="wrapper max-w-3xl mx-auto bg-white p-10 rounded shadow-md border-2 items-center flex gap-10">
+    <div  class="photo">
+        <img class="w-[550px] h-[500px] raunded" src="/media/photo6.jpg" alt="Photo">
+    </div>
+    <form action="{% url 'register' %}" id="register_form" method="POST" novalidate>
+        <div class="title ">
+            Форма регистрации
+        </div>
+        {% csrf_token %}
+        <div class="mt-5 flex gap-5">
+            <div>
+                {{ form.first_name }}
+                <div class="text-red-500">
+                    {{ form.first_name.errors }}
+                </div>
+            </div>
+            <div>
+                {{ form.last_name }}
+                <div class="text-red-500">
+                    {{ form.last_name.errors }}
+                </div>
             </div>
         </div>
-    </div>
+        <div class="mt-5 ">
+            {{ form.username }}
+            <div class="text-red-500">
+                {{ form.username.errors }}
+            </div>
+        </div>
+        <div class="mt-5 ">
+            {{ form.email }}
+            <div class="text-red-500">
+                {{ form.email.errors }}
+            </div>
+        </div>
+        <div class="mt-5 ">
+            {{ form.password1 }}
+            <div class="text-red-500">
+                {{ form.password1.errors }}
+            </div>
+        </div>
+        <div class="mt-5 ">
+            {{ form.password2 }}
+            <div class="text-red-500">
+                {{ form.password2.errors }}
+            </div>
+        </div>
+
+        <div>
+            <button type="submit"
+                class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded-full w-full">Регистрация</button>
+        </div>
+    </form>
+</div>
+
+
+
+<style>
+    #register_form ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        color: red;
+    }
+
+    .wrapper {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+    }
+    .title{
+        font-size: 25px;
+        font-weight: 600;
+        text-align: center;
+    }
+    
+    @media (max-width: 768px) {
+        .photo {
+            display: none;
+        }
+        .wrapper{
+            max-width: 28rem;
+        }
+
+    }
+   
+
+</style>
+
 {% endblock content %}

@@ -1,6 +1,12 @@
+{% load static %}
 <div class="card p-4">
-    <h3 class="text-xl font-semibold text-gray-800  mb-4">Фильтрация</h3>
-    <form method="GET">
+    <button class="mb-5 border border-slate-800 flex justify-between items-center text-xl font-sans text-slate-800 font-bold py-2 px-4 rounded w-full block md:hidden" id="openFilterBtn">
+        <span>Открыть фильтры</span>
+        <img src="{% static 'moobile/assets/svg/burger.svg' %}" alt="" class="w-12 h-12 p-2">
+    </button>
+    
+
+    <form method="GET" class="hidden md:block" id="filterForm">
         {{ filter.form.as_div }}
         <input type="hidden" name="offset" value="{{ request.GET.offset }}">
         <button class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded w-full" type="submit">
@@ -8,3 +14,20 @@
         </button>
     </form>
 </div>
+
+<style>
+
+    @media(max-width: 762px){
+
+    }
+</style>
+
+
+<script>
+    const openFilterBtn = document.getElementById('openFilterBtn');
+    const filterForm = document.getElementById('filterForm');
+
+    openFilterBtn.addEventListener('click', function() {
+        filterForm.classList.toggle('hidden');
+    });
+</script>

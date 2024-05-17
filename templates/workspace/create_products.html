@@ -1,8 +1,105 @@
 {% extends 'workspace/base.html' %}
-
+{% load static %}
 {% block content %}
 
-<div class="mt-5 max-w-lg mx-auto bg-white p-8 rounded-md shadow-md border-4 border-black">
+<div class="mt-5 wrapper lg:max-w-4xl md:max-w-xl mx-auto bg-white p-8 shadow-md border-2 border-black">
+    <h2 class="mb-5 text-xl text-gray-800 font-bold font-sans flex place-content-center ">Создать товар</h2>
+    
+    <form action="{% url 'create_products' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="flex justify-between">
+            <div class="mb-1">
+                <label class="rounded-full" for="">{{ form.title.label }}</label>
+                {{ form.title }}
+                {% for error in form.title.errors %}
+                    <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+                {% endfor %}
+            </div> 
+            
+            <div class="mb-1">
+                <label for="">{{ form.price.label }}</label>
+                {{ form.price }}
+                {% for error in form.price.errors %}
+                    <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-2 content-center">
+                <label for="">Опубликовано</label>
+                {{ form.is_published }}
+                {% for error in form.is_published.errors %}
+                    <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+        </div>
+       
+        <div class="flex justify-between mt-5">
+            <div>
+                <div class="mt-2 relative rounded-md shadow-sm">
+                    <input id="image" name="image" type="file" class="form-control hidden">
+                    <label for="image" class="">
+                        <div class="mb-2 w-[390px] h-[225px] border-dashed border-2 border-slate-800 flex flex-col justify-center items-center cursor-pointer">
+                            <img src="{% static 'moobile/assets/svg/upload.svg' %}" alt="" class="w-16 h-48  ">
+                            <!-- <label for="">{{ form.image.label }}</label> -->
+                        </div>
+                        <span class="cursor-pointer py-2 px-4 block text-center bg-slate-800 text-white rounded-md hover:bg-slate-900 focus:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"> 
+                        Выбрать файл
+                        </span>
+                    </label>
+                </div>
+            </div>
+           
+            <div class="mb-2 ">
+                <!-- <label for="">{{ form.content.label }}</label> -->
+                {{ form.content }}
+                {% for error in form.content.errors %}
+                    <div class="mt-1 mb-2 text-danger">{{ error }}</div>        
+                {% endfor %}
+            </div>
+        </div>
+        
+
+        <!-- <div class="mt-2 mb-5 flex gap-6">
+            <label for="">{{ form.tags.label }}:</label>
+            {% for tag in form.tags %}
+            <div class="flex items-center mb-2">
+                <input id="tag_{{ forloop.counter }}" type="checkbox" name="{{ tag.name }}" class="hidden" {{ tag.checked|yesno:"checked," }}>
+                <label for="tag_{{ forloop.counter }}" class="cursor-pointer px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300">{{ tag.choice_label }}</label>
+            </div>
+            {% endfor %}
+            {% for error in form.tags.errors %}
+            <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+         -->
+
+         <div class="mb-2">
+            <!-- <label for="">{{ form.category.label }}</label> -->
+            {{ form.category }}
+            {% for error in form.category.errors %}
+                <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+
+        <div class="mb-2">
+            <label for="">{{ form.tags.label }}</label>
+            {{ form.tags }}
+            {% for error in form.tags.errors %}
+                <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+   
+        <div class="mb-2">
+            <button type="submit" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded w-full">Создать </button>
+        </div>
+    </form>
+</div>
+
+
+
+<!-- <div class="wrapper2 mt-5 max-w-lg mx-auto bg-white p-8 rounded-md shadow-md border-2 border-black">
     <h2 class="mb-5 text-xl text-gray-800 font-bold font-mono flex place-content-center ">Создать товар</h2>
     
     <form action="{% url 'create_products' %}" method="post" enctype="multipart/form-data">
@@ -32,8 +129,7 @@
             {% endfor %}
         </div>
         
-        <div class="mb-2">
-            <label for="">{{ form.content.label }}</label>
+        <div class="mb-2 w-200">
             {{ form.content }}
             {% for error in form.content.errors %}
                 <div class="mt-1 mb-2 text-danger">{{ error }}</div>        
@@ -58,16 +154,167 @@
         
         <div class="mb-2">
             <label for="">{{ form.tags.label }}</label>
-            {{ form.tags }}
+            {% for tag in form.tags %}
+                <div class="form-check">
+                    {{ tag }}
+                    <label class="form-check-label" for="{{ tag.id_for_label }}">{{ tag.choice_label }}</label>
+                </div>
+            {% endfor %}
             {% for error in form.tags.errors %}
                 <div class="mt-1 mb-2 text-danger">{{ error }}</div>
             {% endfor %}
         </div>
+        
 
         <div class="mb-2">
             <button type="submit" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded w-full">Создать </button>
         </div>
     </form>
-</div>
+</div> -->
+
+<style>
+    .form-container {
+        max-width: 600px; 
+        margin: 0 auto; 
+        padding: 20px;
+        border: 2px solid black;
+        border-radius: 15px;
+        background: rgb(255, 255, 255);
+    }
+    
+    .form-container input[type="text"], 
+    .form-container input[type="file"], 
+    .form-container textarea {
+        width: 100%; 
+        box-sizing: border-box; 
+        margin-bottom: 15px; 
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+    
+    .form-container textarea {
+        resize: vertical; 
+        height: 150px; 
+    }
+    
+    
+    @media (max-width: 767px) {
+        .form-container {
+            padding: 10px;
+        }
+    
+        .form-container h2 {
+            font-size: 1.2rem;
+        }
+    
+        .form-container input[type="text"], 
+        .form-container input[type="file"], 
+        .form-container textarea {
+            margin-bottom: 10px;
+        }
+    }
+    </style>
+    
+    <div class="form-container wrapper2">
+        <h2 class="text-xl text-gray-800 font-bold font-sans text-center">Создать товар</h2>
+        
+        <form action="{% url 'create_products' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div>
+                <label for="title">{{ form.title.label }}</label>
+                {{ form.title }}
+                {% for error in form.title.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div> 
+            
+            <div>
+                <label for="price">{{ form.price.label }}</label>
+                {{ form.price }}
+                {% for error in form.price.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            
+            <div>
+                <!-- <label for="image">{{ form.image.label }}</label> -->
+                {{ form.image }}
+                {% for error in form.image.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            
+            <div>
+                <!-- <label for="content">{{ form.content.label }}</label> -->
+                {{ form.content }}
+                {% for error in form.content.errors %}
+                    <div class="text-danger">{{ error }}</div>        
+                {% endfor %}
+            </div>
+            
+            <div>
+                <label for="is_published">Опубликовано</label>
+                {{ form.is_published }}
+                {% for error in form.is_published.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            
+            <div>
+                <label for="category">{{ form.category.label }}</label>
+                {{ form.category }}
+                {% for error in form.category.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            
+            <div>
+                <label for="tags">{{ form.tags.label }}</label>
+                {% for tag in form.tags %}
+                    <div class="form-check">
+                        {{ tag }}
+                        <label class="form-check-label" for="{{ tag.id_for_label }}">{{ tag.choice_label }}</label>
+                    </div>
+                {% endfor %}
+                {% for error in form.tags.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            
+            <div>
+                <button type="submit" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded w-full">Создать</button>
+            </div>
+        </form>
+    </div>
+    
+
+<style>
+    .wrapper {
+        width: 1200px;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+    }
+    input[type="checkbox"]:checked + label {
+        background-color: #252b38;
+        color: white;
+    }
+
+    @media (max-width: 1024px) {
+        .wrapper{
+            display: none;
+        }
+
+    }
+    @media (min-width: 1024px) {
+        .wrapper2{
+            display: none;
+        }
+
+    }
+    
+</style>
 
 {% endblock content %}

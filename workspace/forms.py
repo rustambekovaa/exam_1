@@ -28,11 +28,12 @@ class ProductForm(forms.ModelForm):
         # }
 
         widgets = {
-                'title': forms.TextInput(attrs={'class':'mb-4 border border-current rounded-none p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Введите заголовок'}),
-                'price': forms.NumberInput(attrs={'class': 'mb-4 border border-current rounded-none p-2 w-full focus:ring-indigo-500 focus:border-indigo-100', 'placeholder': 'Цена'}),
-                'image': forms.FileInput(attrs={'accept': 'image/*', 'class': 'form-control'}),
-                'content': forms.Textarea(attrs={'class': ' mb-4 border border-current rounded-none p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Контент'}),
-                'category': forms.Select(attrs={'class': ' mb-4 form-select'}),
+                'title': forms.TextInput(attrs={'class':'mb-4 border border-current rounded-full p-2 w-full focus:ring-indigo-500 focus:border- -500', 'placeholder': 'Введите заголовок'}),
+                'price': forms.NumberInput(attrs={'class': 'mb-4 border border-current rounded p-2 w-full focus:ring-indigo-500 focus:border-indigo-100', 'placeholder': 'Цена'}),
+                'image': forms.FileInput(attrs={'accept': 'image/*',}),
+                'content': forms.Textarea(attrs={'class': 'content mb-4 p-2 border-2 border-black', 'placeholder': 'Контент'}),
+                'is_published': forms.CheckboxInput(attrs={'class': ' color-slate-800','placeholder':"Опубликовано"}),
+                'category': forms.Select(attrs={'class': ' mb-4 form-select border-solid border-2 p-2 rounded border-slate-800 w-full'}),
                 'tags': forms.CheckboxSelectMultiple()
             }
     
@@ -40,9 +41,9 @@ class ProductForm(forms.ModelForm):
 
 class LoginForm(forms.Form):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'mb-4 border border-current rounded-none p-2 form-input border-gray-300 block w-full rounded-md focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Имя пользователя'}))
+        widget=forms.TextInput(attrs={'class': 'mb-4 border  rounded-full p-2 form-input block w-full rounded-md  focus:border-indigo-500 ', 'placeholder': 'Имя пользователя'}))
     password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'class': 'mb-4 border border-current rounded-none p-2 form-input border-gray-300 block w-full rounded-md focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Пароль'}))
+        attrs={'class': 'mb-4 border border-current rounded-full p-2 form-input border-gray-300 block w-full rounded-md focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Пароль'}))
     
 
 
@@ -51,9 +52,9 @@ class RegisterForm(BaseUserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['password1'].widget = forms.PasswordInput(attrs={'class':'mb-4 border border-current rounded-none p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Придумайте пароль'})
+        self.fields['password1'].widget = forms.PasswordInput(attrs={'class':'mb-4 border border-current rounded-full p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Придумайте пароль'})
         self.fields['password2'].widget = forms.PasswordInput(
-        attrs={'class':' mb-4 border border-current rounded-none p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Подтвердите пароль'})
+        attrs={'class':' mb-4 border border-current rounded-full p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Подтвердите пароль'})
 
     class Meta:
         model = User
@@ -67,10 +68,10 @@ class RegisterForm(BaseUserCreationForm):
         )
 
         widgets = {
-            'first_name': forms.TextInput(attrs={'class':' mb-4 border border-current rounded-none p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Введите имя'}),
-            'last_name': forms.TextInput(attrs={'class':'mb-4 border border-current rounded-none p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Введите фамилию'}),
-            'username': forms.TextInput(attrs={'class':'mb-4 border border-current rounded-none p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Придумайте имя пользователя'}),
-            'email': forms.EmailInput(attrs={'class':'mb-4 border border-current rounded-none p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Введите эл. почту'}),
+            'first_name': forms.TextInput(attrs={'class':' mb-2 border border-current rounded-full p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Имя'}),
+            'last_name': forms.TextInput(attrs={'class':'mb-2 border border-current rounded-full p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Фамилия'}),
+            'username': forms.TextInput(attrs={'class':' border border-current rounded-full p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Придумайте имя пользователя'}),
+            'email': forms.EmailInput(attrs={'class':'mb-2 border border-current rounded-full p-2 w-full focus:ring-indigo-500 focus:border-indigo-500', 'placeholder': 'Введите эл. почту'}),
         }
 
 

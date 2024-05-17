@@ -1,14 +1,19 @@
-
-  <nav class="bg-nav">
+{% load static %}
+  <nav class="nav1">
     <div class="container mx-auto px-6 bg-slate-800">
         <div class="nav_flex p-2">
             <div id="menu_container"></div>
             <div class="logo" href="/">
-              <a class="text-xl text-white font-bold items-center font-mono" href="/">DIOR</a>
+              <a class="text-xl text-white font-bold items-center font-sans" href="/">DIOR</a>
+              {% for category in cats %}
+              <li class="hover:text-white hover:font-bold hover:bg-gray-800 active:bg-gray-800 focus:outline-none focus:ring-violet-300 border-gray-800 border-2 border-gray-300 rounded-full p-2">
+                  <a class="text-decoration-none hover:text-white hover:font-bold block" href="{% url 'datails_category' cat_id=category.id %}">{{ category.name }}</a>
+              </li>
+          {% endfor %}
             </div>
             <menu id="menu">
                 <div class="text-end">
-                    <button id="close_btn"><i class="fa-solid fa-xmark" style="color:#ffff"></i></button>
+                    <button id="close_btn"><i class="fa-brands fa-x-twitter" style="color:#ffff"></i></button>
                 </div>
                 <div class="menu_flex">
                   <form class="flex  lg:mr-0" method="get" action="/">
@@ -27,7 +32,6 @@
                               <ul>
                                 <li>
                                   <a class="flex items-center px-4 py-2 text-sm hover:bg-gray-100" href="{% url 'workspace' %}">Рабочая среда</a>
-                                  
                                 </li>
                                 <li>
                                   <a class="flex items-center px-4 py-2 text-sm hover:bg-gray-100"  href="{% url 'logout' %}">Выйти</a>
@@ -38,61 +42,84 @@
                             </section>
                           </div> 
                         </div>
-                       
-                      </button>                          
+                      </button> 
+                      <section class="py-2 mt-5 desktop">
+                        <ul>
+                          <li class="pt-5 ">
+                            <a class="text-white font-bold toggle_modal" href="{% url 'workspace' %}">Рабочая среда</a>
+                          </li>
+                          <li class="pt-5 ">
+                            <a class="mt-5 text-white font-bold toggle_modal"  href="{% url 'logout' %}">Выйти</a>
+                          </li>
+                          <li class="pt-5 ">
+                            <a class="mt-5 text-white font-bold toggle_modal"  href="{% url 'change_profile' %}">Профиль</a>
+                          </li>
+                        </ul>
+                      </section>
+                                               
                  
-                  {% else %} 
-                     <div class="login flex gap-5">
-                      <div class="grid gap-5">
-                        <a data-modal_id="modal_1" class=" text-white font-bold toggle_modal" aria-current="page" href="{%  url 'login' %}">Войти</a>
-                        <!-- <div class="modal_container" id="modal_1">
-                          <div class="modal_backdrop toggle_modal" data-modal_id="modal_1"></div>
-                          <div class="modal_card">
-                              <div class="text-end">
-                                  <button class="toggle_modal" data-modal_id="modal_1"><i class="fa-solid fa-xmark"></i></button>
-                              </div>
-                              <form action="{% url 'login' %}" id="login_form" method="POST" novalidate>
-                                {% csrf_token %}
-                                <div class="mb-4 ">
-                                    {{ form.username }}
-                                    <div class="text-red-500">
-                                        {{ form.username.errors }}
-                                    </div>
-                                </div>
-                                <div class="mb-4">
-                                    {{ form.password }}
-                                    <div class="text-red-500">
-                                        {{ form.password.errors }}
-                                    </div>
-                                </div>
-                                <div>
-                                    <button type="submit" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded w-full">Login</button>
-                                </div>
-                    
-                                {% if message %}
-                                
-                                <div class="mt-4 text-red-500 text-center">
-                                    <i class="fa-solid fa-circle-exclamation"></i> {{ message }}
-                                </div>
-                                {% endif %}
-                            </form>
-                          </div>
-                        </div> -->
+                  {% else %}                                                                                                                                                                                
+                  <div class="login">
+                    <div class="grid gap-5 hidden-on-desktop">
+                      <a data-modal_id="modal_1" class="text-white font-bold toggle_modal" aria-current="page" href="{% url 'login' %}">Войти</a>
+                      <a aria-current="page"  class="text-white font-bold toggle_modal" href="{% url 'register' %}">Регистрация</a>
+                    </div>
+                  </div>
+                  
+                      
+                      <div class="btn1 flex gap-4">
+                        <div class="btn1 hover:bg-slate-600 rounded-md "> 
+                          <a href="#popup" class="open-modal hover:bg-slate-600 rounded-md"><img src="{% static 'moobile/assets/svg/human.svg' %}" alt="" class="w-10 h-10 p-2 "></a>
+                        </div>
+                      <div class="hover:bg-slate-600 relative rounded-md">
+                        <a href=""><img id="favoriteIcon1" src="{% static 'moobile/assets/svg/like.svg' %}" alt="" class="w-10 h-10 p-2 "></a>
+                        <div id="favoriteCount" class="absolute top-4 right-[-2px] text-white"></div>
                       </div>
-                      <div class="text-white font-bold">
-                        <a aria-current="page" href="{% url 'register' %}">Регистрация</a>
+                        <div class="hover:bg-slate-600 rounded-md">
+                          <a href=""><img src="{% static 'moobile/assets/svg/basket.svg' %}" alt="" class="w-10 h-10 p-2 "></a>
+                        </div>
                       </div>
-                     </div>
+                     
+                     
                       
                   {% endif %}
 
                 </div>
             </menu>
-            <button id="open_btn"><i class="fa-solid fa-bars" style="color: #ffff;"></i></button>
+            <button id="open_btn"><i class="fa-solid fa-layer-group" style="color: #ffff;"></i></button>
           </div>
     </div>
 </nav>
 
+<style>
+
+
+@media (min-width: 767px) {
+  .login{
+    display: block;
+  }
+  .hidden-on-desktop {
+    display: none; 
+  }
+  .shown-on-desktop {
+    display: block; 
+  }
+  .desktop {
+    display: none; /* Скрывать секцию на широких экранах */
+  }
+}
+
+
+
+  @media (max-width: 767px){
+    .btn1{
+      display: none;
+    }
+    #swip_menu{
+      display: none;
+    }
+  }
+</style>
 <script>
     const toggleModals = document.querySelectorAll('.toggle_modal')
     
@@ -122,6 +149,7 @@
     close_btn.addEventListener('click', toggle_menu)
     open_btn.addEventListener('click', toggle_menu)
     menu_container.addEventListener('click', toggle_menu)
+
 
 </script>
 

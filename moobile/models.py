@@ -20,7 +20,7 @@ class Tag(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=100, verbose_name='Название')
     price = models.IntegerField(verbose_name='Цена')
-    image = models.ImageField(verbose_name='Photo')
+    image = models.ImageField(verbose_name='Изображение')
     is_published = models.BooleanField(default=True)
     content = models.TextField(verbose_name='контент')
     date = models.DateTimeField(verbose_name='дата добавление', auto_now_add=True)

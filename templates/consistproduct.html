@@ -8,55 +8,6 @@
         <div class="p-4 w-full">
             <div class="flex flex-wrap justify-center items-center gap-4 relative" >
                 <img id="main-image" data-modal_id="modal_1" src="{{ product.image.url }}" alt="{{ product.title }}" class="main-image  toggle_modal w-64" >
-                <div class="modal_container" id="modal_1">
-                    <div class="modal_backdrop toggle_modal" data-modal_id="modal_1"></div>
-                    <div class="modal_card">
-                        <div class="text-end">
-                            <button class="toggle_modal" data-modal_id="modal_1"><i class="fa-solid fa-xmark"></i></button>
-                        </div>
-                        <img id="modalImage"  data-modal_id="modal_1" src="{{ product.image.url }}" alt="{{ product.title }}" class="main-image toggle_modal" >
-                        <div class="prev-butoon">
-                                <!-- <button class="absolute top-1/2 transform -translate-y-1/2 left-0 bg-gray-200 p-2 rounded-full hover:bg-gray-300" onclick="prevImage()"> -->
-                                    <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                                    </svg> -->
-                                <!-- </button> -->
-            
-                                <!-- <button class="absolute top-1/2 transform -translate-y-1/2 right-0 bg-gray-200 p-2 rounded-full hover:bg-gray-300" onclick="nextImage()">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                    </svg>
-                                </button> -->
-                        </div>
-                    </div>
-                </div>
-                    
-                <div class="prev-button">
-                     <!-- <button class="absolute top-1/2 transform -translate-y-1/2 left-0 bg-gray-200 p-2 rounded-full hover:bg-gray-300" onclick="prevImage()">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-                
-                <button class="absolute top-1/2 transform -translate-y-1/2 right-0 bg-gray-200 p-2 rounded-full hover:bg-gray-300" onclick="nextImage()">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </button>
-                 -->
-                </div>
-               
-                
-                <div class="p-4 w-full flex justify-center items-center">
-                        <div class="flex gap-3 mt-3">
-                            {% for item in product.images.all %}
-                            <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
-                            <swiper-container>
-                              <swiper-slide><img data-modal_id="modal_1" onclick="changeMainImage('{{ item.image.url }}')" src="{{ item.image.url }}" class="toggle_moda w-24 h-auto transform hover:scale-105 transition duration-1000" alt="{{ product.title }}"></swiper-slide>
-                            </swiper-container>
-                            {% endfor %}
-                        </div>
-                </div>
             </div>            
             <div class="overflow-x-auto pt-35">
                 <table class="table w-full">
@@ -65,7 +16,7 @@
                             <th colspan="2" class="border-b mr-40 border-gray-400 py-2 text-lg font-semibold text-gray-800">Детали</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="border-b pb-5 border-gray-400">
                         {% for attribute in product.attributes.all %}
                         <tr>
                             <td class="px-4 py-2">{{ attribute.key }}:</td>
@@ -82,15 +33,15 @@
                 </table>
             </div>
         </div>
-        <div class="p-4  mt-36 mb-6  lg:w-3/4">
+        <div class="p-4  mb-6  lg:w-3/4 lg:mt-36 md:mt-12">
             <h2 class="text-xl font-bold">{{ product.title }}</h2>
-            <p class="text-gray-600 pt-4">Категория: {{ product.category }}</p>
+            <p class="text-gray-600 pt-4">Категория: <span class="text-sm font-semibold text-gray-700 mr-2">{{ product.category }}</span></p>
             <p class="text-gray-600 pt-4">Тэги: 
                 {% for tag in product.tags.all %}
                     <span class="py-1 text-sm font-semibold text-gray-700 mr-2">{{ tag.name }}</span>
                 {% endfor %}
             </p>
-            <h3 class="text-lg font-bold mt-4">Цена: {{ product.price }}</h3>
+            <h3 class="text-lg font-bold mt-4">Цена: ${{ product.price }}</h3>
             <p class="mt-4">{{ product.content }}</p>
         </div>
     </div>
