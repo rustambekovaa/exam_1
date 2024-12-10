@@ -19,6 +19,7 @@ class Tag(models.Model):
 
 class Product(models.Model):
     title = models.CharField(max_length=100, verbose_name='Название')
+    auth = models.CharField(max_length=100, verbose_name='Автор')
     price = models.IntegerField(verbose_name='Цена')
     image = models.ImageField(verbose_name='Изображение')
     is_published = models.BooleanField(default=True)

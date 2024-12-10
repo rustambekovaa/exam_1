@@ -23,7 +23,6 @@ def index(request):
 
     cats = Category.objects.all()
     context = {
-        
         'products':products,
         'cats':cats,
     }

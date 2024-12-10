@@ -33,7 +33,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     @admin.display(description='Изображение')
     def get_image(self, product: Product):
-        if product.image:
+        if product.image: 
             return mark_safe(f'<img src="{product.image.url}" width="100px">')
 
     # @admin.display(description='Изображение')
